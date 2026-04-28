@@ -9,7 +9,10 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 /**
+ * Constants for Custom PDF Settings
  * 
+ * @author edu.remad
+ * @since 2026
  */
 public final class ContentLayoutDataConstants {
 
