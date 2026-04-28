@@ -1,0 +1,1096 @@
+package edu.remad.tutoring3.services.pdf;
+
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.io.File;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.pdfbox.pdmodel.font.PDFont;
+
+import edu.remad.tutoring3.services.pdf.constants.ContentLayoutDataConstants;
+
+/**
+ * Layouts the content
+ * 
+ * @author edu.remad
+ * @since 2026
+ */
+public class ContentLayoutData {
+
+	/**
+	 * full customer's name
+	 */
+	private String customerName;
+
+	/**
+	 * customers street and house number
+	 */
+	private String streetHouseNumber;
+
+	/**
+	 * customer's location and zip code united
+	 */
+	private String locationZipCode;
+
+	/**
+	 * the contact name
+	 */
+	private String contactName;
+
+	/**
+	 * the contact company
+	 */
+	private String contactCompany;
+
+	/**
+	 * the contact mobile number
+	 */
+	private String contactMobile;
+
+	/**
+	 * contact E-Mail
+	 */
+	private String contactEmail;
+
+	/**
+	 * invoice number
+	 */
+	private String invoiceNo;
+
+	/**
+	 * the invoice creation date
+	 */
+	private String invoiceCreationDate;
+
+	/**
+	 * tutoring appointment date and time
+	 */
+	private String tutoringAppointmentDateTime;
+
+	/**
+	 * logo file path
+	 */
+	private File logo;
+
+	/**
+	 * font color as {@link Color}
+	 */
+	private Color fontColor;
+
+	/**
+	 * Normal used font
+	 */
+	private PDFont font;
+
+	/**
+	 * font for italic styled texte
+	 */
+	private PDFont italicFont;
+
+	/**
+	 * contact's street and house number
+	 */
+	private String contactStreetHouseNo;
+
+	/**
+	 * contact's Zip and location
+	 */
+	private String contactZipAndLocation;
+	private DateTimeFormatter dateFormatter;
+	private DateTimeFormatter timeFormatter;
+	private Color tableHeaderColor;
+	private Color tableBodyColor;
+	private List<String> paymentMethods;
+	private String tutoringAppointmentDate;
+	private float capitalFontSize;
+	private float textFontSize;
+	private float paymentMethodFontSize;
+	private String bottomLine;
+	private int bottomLineFontSize;
+	private Color bottomLineFontColor;
+	private Color bottomRectColor;
+	private float bottomLineWidth;
+	private Rectangle bottomRect;
+	private String authoSign;
+	private Color authoSignColor;
+	private int[] tableCellWidths;
+	private int tableCellHeight;
+	private List<String> tableHeaders = new ArrayList<>();
+	private Color paymentMethodColor;
+	private List<Map<String, String>> tableRows;
+	private int pageWidth;
+	private int pageHeight;
+	private String[] valueAddedTaxDisclaimerText;
+	private String creator;
+	private String documentInformationCreator;
+	private String[] documentInformationKeywords;
+	private String subject;
+	private String tableRowsFullPrice;
+	private String splitDelimiter = null;
+	private String invoiceNoLabel;
+	private String invoiceDateLabel;
+	private String invoicePerformanceDateLabel;
+	private boolean hasMainContentLayoutData;
+
+	/**
+	 * Sets full name
+	 *
+	 * @param firstName customer's first name
+	 * @param lastName  customer's last name
+	 */
+	public void setCustomerName(String firstName, String lastName) {
+		this.customerName = String.format("%s %s %s", ContentLayoutDataConstants.NAME_PREFIX, firstName, lastName);
+	}
+
+	/**
+	 * Gets full name
+	 *
+	 * @return the full name
+	 */
+	public String getCustomerName() {
+		return this.customerName;
+	}
+
+	/**
+	 * Sets street and house number
+	 *
+	 * @param street      customer's street to set
+	 * @param houseNumber customer's house number
+	 */
+	public void setStreetHouseNumber(String street, String houseNumber) {
+		this.streetHouseNumber = String.format("%s %s", street, houseNumber);
+	}
+
+	/**
+	 * Gets street house number
+	 *
+	 * @return united street and house number
+	 */
+	public String getStreetHouseNumber() {
+		return this.streetHouseNumber;
+	}
+
+	/**
+	 * Sets location and zip code
+	 *
+	 * @param location customer's location
+	 * @param zipCode  customer's zip code
+	 */
+	public void setLocationZipCode(String location, String zipCode) {
+		this.locationZipCode = String.format("%s %s", location, zipCode);
+	}
+
+	/**
+	 * Gets location zip code
+	 *
+	 * @return location and zip code
+	 */
+	public String getLocationZipCode() {
+		return this.locationZipCode;
+	}
+
+	/**
+	 * Gets contact name
+	 *
+	 * @return contact name
+	 */
+	public String getContactName() {
+		return this.contactName;
+	}
+
+	/**
+	 * Sets contact name
+	 *
+	 * @param contactName contact name t set
+	 */
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+
+	/**
+	 * Gets contact company
+	 *
+	 * @return contact company
+	 */
+	public String getContactCompany() {
+		return this.contactCompany;
+	}
+
+	/**
+	 * Sets contact company
+	 *
+	 * @param contactCompany
+	 */
+	public void setContactCompany(String contactCompany) {
+		this.contactCompany = contactCompany;
+	}
+
+	/**
+	 * Gets contact mobile
+	 *
+	 * @return contact mobile number
+	 */
+	public String getContactMobile() {
+		return this.contactMobile;
+	}
+
+	/**
+	 * Sets contact mobile.
+	 *
+	 * @param contactMobile contact mobile number to set
+	 */
+	public void setContactMobile(String contactMobile) {
+		this.contactMobile = contactMobile;
+	}
+
+	/**
+	 * Gets contact e-Mail
+	 *
+	 * @return contact e-mail
+	 */
+	public String getContactEmail() {
+		return this.contactEmail;
+	}
+
+	/**
+	 * Sets contact
+	 *
+	 * @param contactEmail contact E-Mail to set
+	 */
+	public void setContactEmail(String contactEmail) {
+		this.contactEmail = contactEmail;
+	}
+
+	/**
+	 * Gets invoice number
+	 *
+	 * @return invoice number
+	 */
+	public String getInvoiceNo() {
+		return this.invoiceNo;
+	}
+
+	/**
+	 * Sets invoice number
+	 *
+	 * @param invoiceNo invoice number to set
+	 */
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = String.format("%s %s", ContentLayoutDataConstants.INVOICE_NO_PREFIX, invoiceNo);
+	}
+
+	/**
+	 * Gets only invoice number
+	 * 
+	 * @return string encoded invoice number
+	 */
+	public String getInvoiceNoWithoutPrefix() {
+		return invoiceNo != null ? invoiceNo.replace(ContentLayoutDataConstants.INVOICE_NO_PREFIX + " ", "") : "";
+	}
+
+	/**
+	 * Gets invoice number label
+	 * 
+	 * @return string encoded invoice number label
+	 */
+	public String getInvoiceNoLabel() {
+		return invoiceNoLabel;
+	}
+
+	/**
+	 * Gets invoice date label
+	 * 
+	 * @return invoice date label
+	 */
+	public String getInvoiceDateLabel() {
+		return invoiceDateLabel;
+	}
+
+	/**
+	 * Gets invoice performance date label
+	 * 
+	 * @return invoice performance date label
+	 */
+	public String getInvoicePerformanceDateLabel() {
+		return invoicePerformanceDateLabel;
+	}
+
+	/**
+	 * Gets invoice creation date
+	 *
+	 * @return string-encoded creation date
+	 */
+	public String getInvoiceCreationDate() {
+		return this.invoiceCreationDate;
+	}
+
+	/**
+	 * Sets invoice creation date
+	 *
+	 * @param invoiceCreationDate invoice creation date to set
+	 */
+	public void setInvoiceCreationDate(String invoiceCreationDate) {
+		this.invoiceCreationDate = invoiceCreationDate;
+	}
+
+	/**
+	 * Gets tutoring appointment date and time
+	 *
+	 * @return string-encoded tutoring appointment date and time
+	 */
+	public String getTutoringAppointmentDateTime() {
+		return this.tutoringAppointmentDateTime;
+	}
+
+	/**
+	 * Sets tutoring apoint date and time.
+	 *
+	 * @param date string-encoded and DIN 5008:2020 formatted date to set
+	 * @param time string-encoded and DIN 5008:2020 formatted time to set.
+	 */
+	public void setTutoringAppointmentDateTime(String date, String time) {
+		this.tutoringAppointmentDateTime = String.format("%s %s %s",
+				ContentLayoutDataConstants.TUTORING_APPOINTMENT_PREFIX, date, time);
+	}
+
+	/**
+	 * Gets logo.
+	 *
+	 * @return path to logo as {@link File}
+	 */
+	public File getLogo() {
+		return logo;
+	}
+
+	/**
+	 * Sets logo
+	 *
+	 * @param logo file path to the logo file
+	 */
+	public void setLogo(File logo) {
+		this.logo = logo;
+	}
+
+	/**
+	 * Gets font color.
+	 *
+	 * @return color of the font, {@link Color}
+	 */
+	public Color getFontColor() {
+		return fontColor;
+	}
+
+	/**
+	 * Sets font color
+	 *
+	 * @param fontColor the font color as instance of {@link Color}
+	 */
+	public void setFontColor(Color fontColor) {
+		this.fontColor = fontColor;
+	}
+
+	/**
+	 * Gets font
+	 * 
+	 * @return {@link PDFont}
+	 */
+	public PDFont getFont() {
+		return font;
+	}
+
+	/**
+	 * Sets font.
+	 * 
+	 * @param font {@link PDFont}
+	 */
+	public void setFont(PDFont font) {
+		this.font = font;
+	}
+
+	/**
+	 * Gets italic font
+	 * 
+	 * @return {@link PDFont}
+	 */
+	public PDFont getItalicFont() {
+		return italicFont;
+	}
+
+	/**
+	 * Sets italic font
+	 * 
+	 * @param italicFont {@link PDFont}
+	 */
+	public void setItalicFont(PDFont italicFont) {
+		this.italicFont = italicFont;
+	}
+
+	/**
+	 * Gets contact street and house number
+	 * 
+	 * @return {@link String}
+	 */
+	public String getContactStreetHouseNo() {
+		return contactStreetHouseNo;
+	}
+
+	/**
+	 * Sets contact street and house number
+	 * 
+	 * @param contactStreetHouseNo string encoded street and house number
+	 */
+	public void setContactStreetHouseNo(String contactStreetHouseNo) {
+		this.contactStreetHouseNo = contactStreetHouseNo;
+	}
+
+	/**
+	 * Gets contact zip location
+	 * 
+	 * @return {@link String}
+	 */
+	public String getContactZipAndLocation() {
+		return contactZipAndLocation;
+	}
+
+	/**
+	 * Sets contact zip and location
+	 * 
+	 * @param contactZipAndLocation string zip and location separated by empty space
+	 */
+	public void setContactZipAndLocation(String contactZipAndLocation) {
+		this.contactZipAndLocation = contactZipAndLocation;
+	}
+
+	/**
+	 * Sets date time formatter
+	 * 
+	 * @param simpleDateFormat a date time formatter
+	 */
+	public void setDayFormatter(DateTimeFormatter simpleDateFormat) {
+		this.dateFormatter = simpleDateFormat;
+	}
+
+	/**
+	 * Gets date formatter
+	 * 
+	 * @return {@link DateTimeFormatter}
+	 */
+	public DateTimeFormatter getDateFormatter() {
+		return dateFormatter;
+	}
+
+	/**
+	 * Sets date formatter
+	 * 
+	 * @param dateFormatter date formatter to set
+	 */
+	public void setDateFormatter(DateTimeFormatter dateFormatter) {
+		this.dateFormatter = dateFormatter;
+	}
+
+	/**
+	 * Gets time formatter
+	 * 
+	 * @return {@link DateTimeFormatter}
+	 */
+	public DateTimeFormatter getTimeFormatter() {
+		return timeFormatter;
+	}
+
+	/**
+	 * Sets fime formatter
+	 * 
+	 * @param timeFormatter {@link DateTimeFormatter}-object to set
+	 */
+	public void setTimeFormatter(DateTimeFormatter timeFormatter) {
+		this.timeFormatter = timeFormatter;
+	}
+
+	/**
+	 * Gets table header color object
+	 * 
+	 * @return {@link Color}
+	 */
+	public Color getTableHeaderColor() {
+		return tableHeaderColor;
+	}
+
+	/**
+	 * Sets table header color
+	 * 
+	 * @param color {@link Color}-object to set for header
+	 */
+	public void setTableHeaderColor(Color color) {
+		this.tableHeaderColor = color;
+	}
+
+	/**
+	 * Gets table body color
+	 * 
+	 * @return {@link Color}
+	 */
+	public Color getTableBodyColor() {
+		return tableBodyColor;
+	}
+
+	/**
+	 * Sets table body color object.
+	 * 
+	 * @param color {@link {@link Color}-object
+	 */
+	public void setTableBodyColor(Color color) {
+		this.tableBodyColor = color;
+	}
+
+	/**
+	 * Sets payment methods
+	 * 
+	 * @param paymentMethods list of string encoded payment methods
+	 */
+	public void setPaymentMethods(List<String> paymentMethods) {
+		this.paymentMethods = paymentMethods;
+	}
+
+	/**
+	 * Gets payment method
+	 * 
+	 * @return sets string encoded payment methods
+	 */
+	public List<String> getPaymentMethods() {
+		return paymentMethods;
+	}
+
+	/**
+	 * Sets tutoring appointment.
+	 * 
+	 * @param s string encoded tutoring appointment
+	 */
+	public void setTutoringAppointmentDate(String s) {
+		this.tutoringAppointmentDate = s;
+	}
+
+	/**
+	 * Gets tutoring appointment date
+	 * 
+	 * @return string encoded tutoring appointment date
+	 */
+	public String getTutoringAppointmentDate() {
+		return tutoringAppointmentDate;
+	}
+
+	/**
+	 * Sets capital font size
+	 * 
+	 * @param capitalFontSize font size in points as floating point number
+	 */
+	public void setCapitalFontSize(float capitalFontSize) {
+		this.capitalFontSize = capitalFontSize;
+	}
+
+	/**
+	 * Gets capital font size
+	 * 
+	 * @return points in in floating number format
+	 */
+	public float getCapitalFontSize() {
+		return capitalFontSize;
+	}
+
+	/**
+	 * Sets text font size
+	 * 
+	 * @param textFontSize text font size in points as floating point number
+	 */
+	public void setTextFontSize(float textFontSize) {
+		this.textFontSize = textFontSize;
+	}
+
+	/**
+	 * Gets text font size
+	 * 
+	 * @return text font size in floating point number
+	 */
+	public float getTextFontSize() {
+		return textFontSize;
+	}
+
+	/**
+	 * Sets payment method font size
+	 * 
+	 * @param paymentMethodFontSize font size of payment methods as floating point
+	 *                              number
+	 */
+	public void setPaymentMethodFontSize(float paymentMethodFontSize) {
+		this.paymentMethodFontSize = paymentMethodFontSize;
+	}
+
+	/**
+	 * Gets payment method font size
+	 * 
+	 * @return payment method font size as floating point number
+	 */
+	public float getPaymentMethodFontSize() {
+		return paymentMethodFontSize;
+	}
+
+	/**
+	 * Sets bottom line
+	 * 
+	 * @param bottomLine bottom line text to set
+	 */
+	public void setbottomLine(String bottomLine) {
+		this.bottomLine = bottomLine;
+	}
+
+	/**
+	 * Gets bottom line
+	 * 
+	 * @return {@link String}
+	 */
+	public String getBottomLine() {
+		return bottomLine;
+	}
+
+	/**
+	 * Sets bottom line font size
+	 * 
+	 * @param bottomLineFontSize bottom line's font size as floating point number
+	 */
+	public void setBottomLineFontSize(int bottomLineFontSize) {
+		this.bottomLineFontSize = bottomLineFontSize;
+	}
+
+	/**
+	 * Gets bottom line font size
+	 * 
+	 * @return font size in points as floating point number
+	 */
+	public int getBottomLineFontSize() {
+		return bottomLineFontSize;
+	}
+
+	/**
+	 * Sets bottom line font color
+	 * 
+	 * @param bottomLineFontColor bottom line's color object to set
+	 */
+	public void setBottomLineFontColor(Color bottomLineFontColor) {
+		this.bottomLineFontColor = bottomLineFontColor;
+	}
+
+	/**
+	 * Gets bottom font color object
+	 * 
+	 * @return {@link Color}
+	 */
+	public Color getBottomLineFontColor() {
+		return bottomLineFontColor;
+	}
+
+	/**
+	 * Sets bottom line font color
+	 * 
+	 * @param bottomRectColor bottom font color object to set
+	 */
+	public void setBottomRectColor(Color bottomRectColor) {
+		this.bottomRectColor = bottomRectColor;
+	}
+
+	public Color getBottomRectColor() {
+		return bottomRectColor;
+	}
+
+	/**
+	 * Sets bottom line width
+	 * 
+	 * @param bottomLineWidth bottom line width in points as floating point number
+	 */
+	public void setBottomLineWidth(float bottomLineWidth) {
+		this.bottomLineWidth = bottomLineWidth;
+	}
+
+	/**
+	 * Gets bottom line width
+	 * 
+	 * @return line width in points as floating point number
+	 */
+	public float getBottomLineWidth() {
+		return bottomLineWidth;
+	}
+
+	/**
+	 * Sets bottom rectangle
+	 * 
+	 * @param bottomRect {}@link Rectangle}
+	 */
+	public void setBottomRect(Rectangle bottomRect) {
+		this.bottomRect = bottomRect;
+	}
+
+	/**
+	 * Gets bottom Rectangle
+	 * 
+	 * @return {@link Rectangle}
+	 */
+	public Rectangle getBottomRect() {
+		return bottomRect;
+	}
+
+	/**
+	 * Sets autho sign text
+	 * 
+	 * @param authoSign autho sign text to set
+	 */
+	public void setAuthoSign(String authoSign) {
+		this.authoSign = authoSign;
+	}
+
+	/**
+	 * Gets Autho sign text
+	 * 
+	 * @return {@link String}
+	 */
+	public String getAuthoSign() {
+		return authoSign;
+	}
+
+	/**
+	 * Sets autho sign color
+	 * 
+	 * @param authoSignColor autho sign text color
+	 */
+	public void setAuthoSignColor(Color authoSignColor) {
+		this.authoSignColor = authoSignColor;
+	}
+
+	/**
+	 * Gets autho sign color
+	 * 
+	 * @return {@link Color}
+	 */
+	public Color getAuthoSignColor() {
+		return authoSignColor;
+	}
+
+	/**
+	 * Sets table cells widths
+	 * 
+	 * @param tableCellWidths cell widths to set
+	 */
+	public void setTableCellWidths(int[] tableCellWidths) {
+		this.tableCellWidths = tableCellWidths;
+	}
+
+	/**
+	 * Gets table cell widths
+	 * 
+	 * @return table cell widths as integers
+	 */
+	public int[] getTableCellWidths() {
+		return tableCellWidths;
+	}
+
+	/**
+	 * Sets table cell height
+	 * 
+	 * @param tableCellHeight table cell height
+	 */
+	public void setTableCellHeight(int tableCellHeight) {
+		this.tableCellHeight = tableCellHeight;
+	}
+
+	/**
+	 * Gets table cell height
+	 * 
+	 * @return table cell height as integer
+	 */
+	public int getTableCellHeight() {
+		return tableCellHeight;
+	}
+
+	/**
+	 * Sets table headers
+	 * 
+	 * @param tableHeaders table headers value
+	 */
+	public void setTableHeaders(List<String> tableHeaders) {
+		this.tableHeaders = tableHeaders;
+	}
+
+	/**
+	 * Gets table header value
+	 * 
+	 * @return list of {@link Strings}
+	 */
+	public List<String> getTableHeaders() {
+		return tableHeaders;
+	}
+
+	/**
+	 * Sets payment method color object
+	 * 
+	 * @param paymentMethodColor payment method color to set
+	 */
+	public void setPaymentMethodColor(Color paymentMethodColor) {
+		this.paymentMethodColor = paymentMethodColor;
+	}
+
+	/**
+	 * Gets payment method color
+	 * 
+	 * @return {@link Color}
+	 */
+	public Color getPaymentMethodColor() {
+		return paymentMethodColor;
+	}
+
+	/**
+	 * Sets table rows
+	 * 
+	 * @param tableRows table rows to set
+	 */
+	public void setTableRows(List<Map<String, String>> tableRows) {
+		this.tableRows = tableRows;
+	}
+
+	/**
+	 * Gets table rows
+	 * 
+	 * @return List of key value pairs
+	 */
+	public List<Map<String, String>> getTableRows() {
+		return tableRows;
+	}
+
+	/**
+	 * Sets page width
+	 * 
+	 * @param pageWidth page width as Integer to set
+	 */
+	public void setPageWidth(int pageWidth) {
+		this.pageWidth = pageWidth;
+	}
+
+	/**
+	 * Gets page width
+	 * 
+	 * @return page width as integer
+	 */
+	public int getPageWidth() {
+		return pageWidth;
+	}
+
+	/**
+	 * Sets page height
+	 * 
+	 * @param pageHeight page height as integer to set
+	 */
+	public void setPageHeight(int pageHeight) {
+		this.pageHeight = pageHeight;
+	}
+
+	/**
+	 * Gets page height
+	 * 
+	 * @return page height as integer
+	 */
+	public int getPageHeight() {
+		return this.pageHeight;
+	}
+
+	/**
+	 * Sets invoice number label
+	 * 
+	 * @param invoiceNoLabel invoice number label
+	 */
+	public void setInvoiceNoLabel(String invoiceNoLabel) {
+		this.invoiceNoLabel = invoiceNoLabel;
+	}
+
+	/**
+	 * Sets invoice date label
+	 * 
+	 * @param invoiceDateLabel invoice date label to set
+	 */
+	public void setInvoiceDateLabel(String invoiceDateLabel) {
+		this.invoiceDateLabel = invoiceDateLabel;
+	}
+
+	/**
+	 * Sets invoice performance date label
+	 * 
+	 * @param invoicePerformanceDateLabel invoice performance date label to set
+	 */
+	public void setInvoicePerformanceDateLabel(String invoicePerformanceDateLabel) {
+		this.invoicePerformanceDateLabel = invoicePerformanceDateLabel;
+	}
+
+	/**
+	 * Sets value added tax disclaimer text
+	 * 
+	 * @param valueAddedTaxDisclaimerText tax disclaimer value to set
+	 */
+	public void setValueAddedTaxDisclaimerText(String[] valueAddedTaxDisclaimerText) {
+		this.valueAddedTaxDisclaimerText = valueAddedTaxDisclaimerText;
+	}
+
+	/**
+	 * Gets value for tax disclaimer text
+	 * 
+	 * @return array of {@link String}
+	 */
+	public String[] getValueAddedTaxDisclaimerText() {
+		return this.valueAddedTaxDisclaimerText;
+	}
+
+	/**
+	 * Gets creator
+	 * 
+	 * @return {@link String}
+	 */
+	public String getCreator() {
+		return this.creator;
+	}
+
+	/**
+	 * Sets creator
+	 * 
+	 * @param creator creator's name to set
+	 */
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	/**
+	 * Sets document information creator
+	 * 
+	 * @param documentInformationCreator creator's name of document information
+	 */
+	public void setDocumentInformationCreator(String documentInformationCreator) {
+		this.documentInformationCreator = documentInformationCreator;
+	}
+
+	/**
+	 * Gets document information creator
+	 * 
+	 * @return creator as {@link String}
+	 */
+	public String getDocumentInformationCreator() {
+		return this.documentInformationCreator;
+	}
+
+	/**
+	 * Sets document information keywords
+	 * 
+	 * @param documentInformationKeywords array of {@link String}s as keywords
+	 */
+	public void setDocumentInformationKeywords(String[] documentInformationKeywords) {
+		this.documentInformationKeywords = documentInformationKeywords;
+	}
+
+	/**
+	 * Gets document information keywords
+	 * 
+	 * @return string encoded keywords
+	 */
+	public String[] getDocumentInformationKeywords() {
+		return this.documentInformationKeywords;
+	}
+
+	/**
+	 * Gets document information keyword by index
+	 * 
+	 * @param index keyword index starts by 0
+	 * @return {@link String}
+	 */
+	public String getDocumentInformationKeywordByIndex(int index) {
+		if (index == this.documentInformationKeywords.length || index > this.documentInformationKeywords.length) {
+			return "";
+		}
+
+		return this.documentInformationKeywords[index];
+	}
+
+	/**
+	 * Gets subject
+	 * 
+	 * @return {@link String}
+	 */
+	public String getSubject() {
+		if ((subject == null || subject.length() < 2) && (invoiceNoLabel != null && invoiceNo != null)) {
+			subject = invoiceNoLabel + " " + invoiceNo;
+		}
+
+		return subject;
+	}
+
+	/**
+	 * Checks is main content layout data
+	 * 
+	 * @return {@code true} or {@code false}
+	 */
+	public boolean isHasMainContentLayoutData() {
+		return hasMainContentLayoutData;
+	}
+
+	/**
+	 * Sets has main content
+	 * 
+	 * @param hasMainContentLayoutData {@code true} means has main content
+	 */
+	public void setHasMainContentLayoutData(boolean hasMainContentLayoutData) {
+		this.hasMainContentLayoutData = hasMainContentLayoutData;
+	}
+
+	/**
+	 * Gets invoice positions as full price
+	 * 
+	 * @return {@link String}
+	 */
+	public String getInvoicePositionsAsFullPrice() {
+		if (tableRowsFullPrice == null) {
+			double sum = 0;
+
+			for (Map<String, String> row : tableRows) {
+				String price = row.get("Gesamt");
+
+				if (price != null && price.length() > 2) {
+					price = price.replace(" EUR", "");
+					price = price.replace("EUR", "");
+					double doublePrice = Double.parseDouble(price);
+					sum += doublePrice;
+				}
+			}
+
+			String formattedPrice = String.format("%,.2f", sum).replace(",", ".").replace(".00", "");
+			tableRowsFullPrice = formattedPrice;
+		}
+
+		return tableRowsFullPrice;
+	}
+
+	/**
+	 * Gets split delimiter
+	 * 
+	 * @return string encoded delimiter
+	 */
+	public String getSplitDelimiter() {
+		return splitDelimiter;
+	}
+
+	/**
+	 * Sets split delimiter
+	 * 
+	 * @param splitDelimiter the split delimiter to set
+	 */
+	public void setSplitDelimiter(String splitDelimiter) {
+		this.splitDelimiter = splitDelimiter;
+	}
+
+	public String getTutoringAppointmentDate(String convertLocalDateTimeToStringDate) {
+		return tutoringAppointmentDate;
+	}
+}
