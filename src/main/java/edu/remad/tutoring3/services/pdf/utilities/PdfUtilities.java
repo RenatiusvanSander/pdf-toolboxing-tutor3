@@ -21,9 +21,14 @@ import edu.remad.tutoring3.persistence.models.TutoringAppointmentEntity;
 import edu.remad.tutoring3.persistence.models.UserEntity;
 import edu.remad.tutoring3.services.pdf.ContentLayoutData;
 import edu.remad.tutoring3.services.pdf.constants.ContentLayoutDataConstants;
+import edu.remad.tutoring3.services.pdf.documentinformation.DocumentInformationBuilder;
 import edu.remad.tutoring3.services.pdf.exception.PdfUtilitiesException;
 
 public final class PdfUtilities {
+	
+	private static final DateTimeFormatter GERMAN_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+	
+	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
 	/**
 	 * private Constructor
@@ -86,16 +91,16 @@ public final class PdfUtilities {
 			contentLayoutData.setContactEmail(ContentLayoutDataConstants.CONTACT_EMAIL);
 			contentLayoutData.setInvoiceNo(String.valueOf(invoice.getNo()));
 			contentLayoutData
-					.setDayFormatter(dayFormatter != null ? dayFormatter : TimeAppConstants.GERMAN_DATE_FORMATTER);
-			contentLayoutData.setTimeFormatter(timeFormatter != null ? timeFormatter : TimeAppConstants.TIME_FORMATTER);
+					.setDayFormatter(dayFormatter != null ? dayFormatter : getGermanDateFormatter());
+			contentLayoutData.setTimeFormatter(timeFormatter != null ? timeFormatter : getTimeFormatter());
 			contentLayoutData.setTableHeaderColor(ContentLayoutDataConstants.TABLE_HEADER_COLOR);
 			contentLayoutData.setTableBodyColor(ContentLayoutDataConstants.TABLE_BODY_COLOR);
 			contentLayoutData.setPaymentMethods(ContentLayoutDataConstants.PAYMENT_METHODS);
 			contentLayoutData.setPaymentMethodColor(ContentLayoutDataConstants.PAYMENT_METHOD_COLOR);
 			contentLayoutData.setTutoringAppointmentDate(
-					invoice.getTutoringDate().format(TimeAppConstants.GERMAN_DATE_FORMATTER));
+					invoice.getTutoringDate().format(dayFormatter));
 			contentLayoutData.setInvoiceCreationDate(
-					invoice.getCreationDate().format(TimeAppConstants.GERMAN_DATE_FORMATTER));
+					invoice.getCreationDate().format(dayFormatter));
 			contentLayoutData.setCapitalFontSize(ContentLayoutDataConstants.CAPITAL_FONT_SIZE);
 			contentLayoutData.setTextFontSize(ContentLayoutDataConstants.TEXT_FONT_SIZE);
 			contentLayoutData.setPaymentMethodFontSize(ContentLayoutDataConstants.PAYMENT_METHOD_FONT_SIZE);
@@ -246,7 +251,28 @@ public final class PdfUtilities {
 		return builder;
 	}
 
+	/**
+	 * Converts LocalDateTime to string-encoded date.
+	 * 
+	 * @param date a date as {@link LocalDateTime}
+	 * @param timeFormatter the formatter for the time as {@link DateTimeFormatter}
+	 * @return String-encoded Date 
+	 */
 	public static String convertLocalDateTimeToStringDate(LocalDateTime date, DateTimeFormatter timeFormatter) {
 		return date.format(timeFormatter);
+	}
+	
+	/**
+	 * @return German Date Formatter for days with Pattern {@code dd.MM.yyyy} as {@link DateTimeFormatter}
+	 */
+	public static DateTimeFormatter getGermanDateFormatter() {
+		return GERMAN_DATE_FORMATTER;
+	}
+	
+	/**
+	 * @return German Time Formatter for hours and minutes with Pattern {@code HH:mm} as {@link DateTimeFormatter}
+	 */
+	public static DateTimeFormatter getTimeFormatter() {
+		return TIME_FORMATTER;
 	}
 }

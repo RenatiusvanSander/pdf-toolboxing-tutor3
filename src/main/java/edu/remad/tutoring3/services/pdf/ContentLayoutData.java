@@ -13,7 +13,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import edu.remad.tutoring3.services.pdf.constants.ContentLayoutDataConstants;
 
 /**
- * Layouts the content
+ * data of content layout
  * 
  * @author edu.remad
  * @since 2026
