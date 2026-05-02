@@ -24,6 +24,12 @@ import edu.remad.tutoring3.services.pdf.constants.ContentLayoutDataConstants;
 import edu.remad.tutoring3.services.pdf.documentinformation.DocumentInformationBuilder;
 import edu.remad.tutoring3.services.pdf.exception.PdfUtilitiesException;
 
+/**
+ * Utility class for all Builders
+ * 
+ * @author edu.remad
+ * @since 2026
+ */
 public final class PdfUtilities {
 
 	private static final DateTimeFormatter GERMAN_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -136,29 +142,6 @@ public final class PdfUtilities {
 	/**
 	 * Create table rows
 	 * 
-	 * @param tutoringAppointment object of {@link TutoringAppointmentEntity}
-	 * @param invoice             invoice data as {@link InvoiceEntity}
-	 * @return table rows
-	 */
-	public static List<Map<String, String>> createTableRows(TutoringAppointmentEntity tutoringAppointment,
-			InvoiceEntity invoice) {
-		BigDecimal price = invoice.getPriceId().getPrice().setScale(2, RoundingMode.HALF_UP);
-		List<Map<String, String>> tableRows = new ArrayList<>();
-		Map<String, String> row1 = new LinkedHashMap<>();
-		row1.put(ContentLayoutDataConstants.TABLE_HEADERS.get(0), "1");
-		row1.put(ContentLayoutDataConstants.TABLE_HEADERS.get(1),
-				invoice.getServiceContractId().getServiceContractName());
-		row1.put(ContentLayoutDataConstants.TABLE_HEADERS.get(2), String.valueOf(price));
-		row1.put(ContentLayoutDataConstants.TABLE_HEADERS.get(3), "1");
-		row1.put(ContentLayoutDataConstants.TABLE_HEADERS.get(4), String.valueOf(price) + "EUR");
-		tableRows.add(row1);
-
-		return tableRows;
-	}
-
-	/**
-	 * Create table rows
-	 * 
 	 * @param invoice invoice data as {@link InvoiceEntity}
 	 * @return table rows
 	 */
@@ -218,7 +201,6 @@ public final class PdfUtilities {
 		}
 
 		List<ContentLayoutData> contentLayoutDatas = new ArrayList<>();
-
 		for (InvoiceEntity invoice : invoices) {
 			contentLayoutDatas.add(createContentLayoutData(invoice));
 		}
@@ -284,4 +266,5 @@ public final class PdfUtilities {
 	public static DateTimeFormatter getTimeFormatter() {
 		return TIME_FORMATTER;
 	}
+	
 }
