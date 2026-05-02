@@ -164,26 +164,23 @@ public class PDFMergerSample {
 		ServiceContractEntity invoiceServiceContract = new ServiceContractEntity(1l, "Elektrotechnik Grundlagen",
 				"Grundlagen Beschreibung", invoiceCreationDate);
 
-		ZipCodeEntity zipCode = new ZipCodeEntity("22359", "Hamburg", LocalDateTime.now());
 		UserEntity invoiceUser = new UserEntity();
 		invoiceUser.setUserId(1l);
-		invoiceUser.setUsername("JohnnyDoe");
+		invoiceUser.setPreferredUsername("JohnnyDoe");
 		invoiceUser.setEmail("johndoesjohndoe.com");
 		invoiceUser.setPassword("ThisIsNotAPassword");
-		invoiceUser.setEnabled(true);
-		invoiceUser.setFirstName("John");
-		invoiceUser.setLastName("Doe");
-		invoiceUser.setGender("Male");
-		invoiceUser.setCellPhone("06363635253636363636");
+		invoiceUser.setFamilyName("Doe");
+		invoiceUser.setName("John");
+		invoiceUser.setGivenName("John");
 
-		AddressEntity address = new AddressEntity(1l, "Volksdorfer Grenzweg", "40a", invoiceUser, zipCode);
+		AddressEntity address = new AddressEntity(1l, "Volksdorfer Grenzweg", "40a", 22359, "Hamburg", invoiceUser, LocalDateTime.now());
 		invoiceUser.setAddresses(List.of(address));
 
 		BigDecimal bigDecimalPrice = new BigDecimal(12.65);
-		PriceEntity price = new PriceEntity(1l, invoiceUser, bigDecimalPrice, invoiceServiceContract);
+		PriceEntity price = new PriceEntity(1l, bigDecimalPrice, "EUR",LocalDateTime.now());
 
 		InvoiceEntity invoice = new InvoiceEntity(invoiceNumber, invoiceServiceContract, invoiceTutoringHours,
-				invoiceDate, invoiceTutoringDate, invoiceUser, price, invoiceCreationDate);
+				invoiceDate, invoiceTutoringDate, invoiceUser, price, null, invoiceCreationDate);
 
 		return invoice;
 	}
