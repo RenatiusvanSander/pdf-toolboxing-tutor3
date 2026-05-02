@@ -25,9 +25,9 @@ import edu.remad.tutoring3.services.pdf.documentinformation.DocumentInformationB
 import edu.remad.tutoring3.services.pdf.exception.PdfUtilitiesException;
 
 public final class PdfUtilities {
-	
+
 	private static final DateTimeFormatter GERMAN_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-	
+
 	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
 	/**
@@ -45,7 +45,7 @@ public final class PdfUtilities {
 	 */
 	public static ContentLayoutData createContentLayoutData(InvoiceEntity invoice) {
 		try {
-			return createMainContentLayoutData(invoice, null, null);
+			return createMainContentLayoutData(invoice, GERMAN_DATE_FORMATTER, TIME_FORMATTER);
 		} catch (RuntimeException e) {
 			throw new PdfUtilitiesException("PdfUtilities: Error while creating ContentLayoutData.", e);
 		}
@@ -80,8 +80,7 @@ public final class PdfUtilities {
 			contentLayoutData.setItalicFont(PDType1Font.HELVETICA_OBLIQUE);
 			contentLayoutData.setFontColor(Color.BLACK);
 			contentLayoutData.setStreetHouseNumber(address.getAddressStreet(), address.getAddressHouseNo());
-			contentLayoutData.setLocationZipCode(String.valueOf(address.getAddressZipCode()),
-					address.getPlace());
+			contentLayoutData.setLocationZipCode(String.valueOf(address.getAddressZipCode()), address.getPlace());
 			contentLayoutData.setContactCompany(ContentLayoutDataConstants.CONTACT_COMPANY);
 			contentLayoutData.setContactName(ContentLayoutDataConstants.CONTACT_NAME);
 			contentLayoutData.setContactStreetHouseNo(ContentLayoutDataConstants.CONTACT_STREET_HOUSE_NO);
@@ -90,17 +89,14 @@ public final class PdfUtilities {
 			contentLayoutData.setContactMobile(ContentLayoutDataConstants.CONTACT_MOBILE);
 			contentLayoutData.setContactEmail(ContentLayoutDataConstants.CONTACT_EMAIL);
 			contentLayoutData.setInvoiceNo(String.valueOf(invoice.getNo()));
-			contentLayoutData
-					.setDayFormatter(dayFormatter != null ? dayFormatter : getGermanDateFormatter());
+			contentLayoutData.setDayFormatter(dayFormatter != null ? dayFormatter : getGermanDateFormatter());
 			contentLayoutData.setTimeFormatter(timeFormatter != null ? timeFormatter : getTimeFormatter());
 			contentLayoutData.setTableHeaderColor(ContentLayoutDataConstants.TABLE_HEADER_COLOR);
 			contentLayoutData.setTableBodyColor(ContentLayoutDataConstants.TABLE_BODY_COLOR);
 			contentLayoutData.setPaymentMethods(ContentLayoutDataConstants.PAYMENT_METHODS);
 			contentLayoutData.setPaymentMethodColor(ContentLayoutDataConstants.PAYMENT_METHOD_COLOR);
-			contentLayoutData.setTutoringAppointmentDate(
-					invoice.getTutoringDate().format(dayFormatter));
-			contentLayoutData.setInvoiceCreationDate(
-					invoice.getCreationDate().format(dayFormatter));
+			contentLayoutData.setTutoringAppointmentDate(invoice.getTutoringDate().format(dayFormatter));
+			contentLayoutData.setInvoiceCreationDate(invoice.getCreationDate().format(dayFormatter));
 			contentLayoutData.setCapitalFontSize(ContentLayoutDataConstants.CAPITAL_FONT_SIZE);
 			contentLayoutData.setTextFontSize(ContentLayoutDataConstants.TEXT_FONT_SIZE);
 			contentLayoutData.setPaymentMethodFontSize(ContentLayoutDataConstants.PAYMENT_METHOD_FONT_SIZE);
@@ -209,7 +205,18 @@ public final class PdfUtilities {
 		return new File(filePath);
 	}
 
+	/**
+	 * Creates data of content layout
+	 * 
+	 * @param invoices invoices massaged to {@link ContentLayoutData}
+	 * @return list of {@link ContentLayoutData}
+	 */
 	public static List<ContentLayoutData> createContentLayoutDatas(List<InvoiceEntity> invoices) {
+		if (invoices == null || invoices.isEmpty()) {
+			throw new PdfUtilitiesException(
+					"Error: createContentLayoutDatas was called either with null or list of type ContentLayoutData was empty.");
+		}
+
 		List<ContentLayoutData> contentLayoutDatas = new ArrayList<>();
 
 		for (InvoiceEntity invoice : invoices) {
@@ -254,23 +261,25 @@ public final class PdfUtilities {
 	/**
 	 * Converts LocalDateTime to string-encoded date.
 	 * 
-	 * @param date a date as {@link LocalDateTime}
+	 * @param date          a date as {@link LocalDateTime}
 	 * @param timeFormatter the formatter for the time as {@link DateTimeFormatter}
-	 * @return String-encoded Date 
+	 * @return String-encoded Date
 	 */
 	public static String convertLocalDateTimeToStringDate(LocalDateTime date, DateTimeFormatter timeFormatter) {
 		return date.format(timeFormatter);
 	}
-	
+
 	/**
-	 * @return German Date Formatter for days with Pattern {@code dd.MM.yyyy} as {@link DateTimeFormatter}
+	 * @return German Date Formatter for days with Pattern {@code dd.MM.yyyy} as
+	 *         {@link DateTimeFormatter}
 	 */
 	public static DateTimeFormatter getGermanDateFormatter() {
 		return GERMAN_DATE_FORMATTER;
 	}
-	
+
 	/**
-	 * @return German Time Formatter for hours and minutes with Pattern {@code HH:mm} as {@link DateTimeFormatter}
+	 * @return German Time Formatter for hours and minutes with Pattern
+	 *         {@code HH:mm} as {@link DateTimeFormatter}
 	 */
 	public static DateTimeFormatter getTimeFormatter() {
 		return TIME_FORMATTER;
