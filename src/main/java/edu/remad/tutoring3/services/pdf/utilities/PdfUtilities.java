@@ -17,7 +17,6 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import edu.remad.tutoring3.persistence.models.AddressEntity;
 import edu.remad.tutoring3.persistence.models.InvoiceEntity;
-import edu.remad.tutoring3.persistence.models.TutoringAppointmentEntity;
 import edu.remad.tutoring3.persistence.models.UserEntity;
 import edu.remad.tutoring3.services.pdf.ContentLayoutData;
 import edu.remad.tutoring3.services.pdf.constants.ContentLayoutDataConstants;
@@ -223,7 +222,7 @@ public final class PdfUtilities {
 	}
 
 	/**
-	 * populate DocumentInformationBuilder
+	 * populates DocumentInformationBuilder
 	 * 
 	 * @param contentLayout {@link ContentLayoutData}
 	 * @return {@link DocumentInformationBuilder}

@@ -234,7 +234,7 @@ public class PDFCreationBuilder {
 				accessPermission.setCanExtractForAccessibility(false);
 				accessPermission.setCanExtractContent(false);
 				accessPermission.setCanAssembleDocument(false);
-				accessPermission.setCanPrintDegraded(false);
+				accessPermission.setCanPrintFaithful(false);
 				String password = invoiceData.getUserId().getEmail();
 				StandardProtectionPolicy standardProtectionPolicy = new StandardProtectionPolicy(password, password,
 						accessPermission);

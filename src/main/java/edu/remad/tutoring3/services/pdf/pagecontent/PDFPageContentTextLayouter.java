@@ -29,7 +29,7 @@ public class PDFPageContentTextLayouter {
      * MyTextClass Constructor
      *
      * @param document      in-memmory PDF-document
-     * @param contentStream page constent stream to stream text on page
+     * @param contentStream page content stream to stream text on page
      */
     public PDFPageContentTextLayouter(PDDocument document, PDPageContentStream contentStream) {
         this.document = document;
@@ -66,7 +66,7 @@ public class PDFPageContentTextLayouter {
      * @param leading   the leading
      * @param xPosition x position
      * @param yPosition y position
-     * @param font      font type to foat text
+     * @param font      font type for text
      * @param fontSize  font size of text to add
      * @param color     color for text to add
      * @throws IOException In case of input / output errors to write on PDF-page.

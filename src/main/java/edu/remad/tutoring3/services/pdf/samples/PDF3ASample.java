@@ -50,8 +50,8 @@ public final class PDF3ASample {
 			PDPageContentStream contentStream = new PDPageContentStream(document, pageA4);
 			contentStream.beginText();
 			contentStream.setFont(PDType1Font.TIMES_ROMAN, 12f);
-			contentStream.moveTextPositionByAmount(100, 700);
-			contentStream.drawString("hhhhhhh");
+			contentStream.newLineAtOffset(100, 700);
+			contentStream.showText("hhhhhhh");
 			contentStream.endText();
 			contentStream.saveGraphicsState();
 			contentStream.close();

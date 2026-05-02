@@ -55,8 +55,8 @@ public final class PDF3AWithPasswordFileAttachmentSample {
 			PDPageContentStream contentStream = new PDPageContentStream(document, pageA4);
 			contentStream.beginText();
 			contentStream.setFont(PDType1Font.TIMES_ROMAN, 12f);
-			contentStream.moveTextPositionByAmount(100, 700);
-			contentStream.drawString("hhhhhhh");
+			contentStream.newLineAtOffset(100, 700);
+			contentStream.showText("hhhhhhh");
 			contentStream.endText();
 			contentStream.saveGraphicsState();
 			contentStream.close();
@@ -130,7 +130,7 @@ public final class PDF3AWithPasswordFileAttachmentSample {
 			accessPermission.setCanExtractForAccessibility(false);
 			accessPermission.setCanExtractContent(false);
 			accessPermission.setCanAssembleDocument(false);
-			accessPermission.setCanPrintDegraded(false);
+			accessPermission.setCanPrintFaithful(false);
 
 			StandardProtectionPolicy standardProtectionPolicy = new StandardProtectionPolicy("12345678", "12345678",
 					accessPermission);
