@@ -2,6 +2,7 @@ package edu.remad.tutoring3.services.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -14,7 +15,7 @@ import edu.remad.tutoring3.services.pdf.pagecontent.SinglePageContentLayouter;
 import edu.remad.tutoring3.services.pdf.utilities.PdfUtilities;
 
 /**
- * Builds complex invoice
+ * Builds a complex invoice
  * 
  * @author edu.remad
  * @since 2026
@@ -22,6 +23,10 @@ import edu.remad.tutoring3.services.pdf.utilities.PdfUtilities;
 public class PDFComplexInvoiceBuilder {
 
 	private InvoiceEntity invoice;
+	
+	private DateTimeFormatter dayFormatFormatter;
+	
+	private DateTimeFormatter timeFormatFormatter;
 
 	private PDDocument pdfDoucment;
 
@@ -36,12 +41,40 @@ public class PDFComplexInvoiceBuilder {
 
 		return this;
 	}
+	
+	/**
+	 * Allows to define a {@link DateTimeFormatter} for day format
+	 * 
+	 * @param dayFormatFormatter formats the day / date on an invoice
+	 * @return {@link PDFComplexInvoiceBuilder}
+	 */
+	public PDFComplexInvoiceBuilder dayFormatFormatter(DateTimeFormatter dayFormatFormatter) {
+		this.dayFormatFormatter = dayFormatFormatter;
+		
+		return this;
+	}
+	
+	/**
+	 * Allows to define a {@link DateTimeFormatter} for time format
+	 * 
+	 * @param timeFormatFormatter formats the time / hours on an invoice
+	 * @return {@link PDFComplexInvoiceBuilder}
+	 */
+	public PDFComplexInvoiceBuilder timeFormatFormatter(DateTimeFormatter timeFormatFormatter) {
+		this.timeFormatFormatter = timeFormatFormatter;
+		
+		return this;
+	}
 
 	/**
 	 * @return byte array of invoice PDF
 	 */
 	public byte[] build() {
-		return buildDocument(PdfUtilities.createContentLayoutData(invoice));
+		if(dayFormatFormatter != null || timeFormatFormatter != null) {
+			return buildDocument(PdfUtilities.createContentLayoutData(invoice, dayFormatFormatter, timeFormatFormatter));
+		} else {
+			return buildDocument(PdfUtilities.createContentLayoutData(invoice));
+		}
 	}
 
 	private byte[] buildDocument(ContentLayoutData contentLayout) {
