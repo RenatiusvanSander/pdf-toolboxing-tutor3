@@ -1,8 +1,10 @@
 package edu.remad.tutoring3.services.pdf.utilities;
 
 import java.awt.Color;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -266,6 +268,35 @@ public final class PdfUtilities {
 	 */
 	public static DateTimeFormatter getTimeFormatter() {
 		return TIME_FORMATTER;
+	}
+	
+	/**
+	 * Converts byte[] to {@link ByteArrayInputStream}
+	 * 
+	 * @param pdfByteArray pdf-file as byte[]
+	 * @return {@link ByteArrayInputStream}
+	 */
+	public static InputStream convertByteArrayToInputStream(byte[] pdfByteArray) {
+		return new ByteArrayInputStream(pdfByteArray);
+	}
+	
+	/**
+	 * Converts byte[]-Arrays to a list of {@link ByteArrayInputStream}
+	 * 
+	 * @param pdfByteArrays pdfByteArray pdf-files to be converted to {@link InputStream}
+	 * @return list of {@link InputStream}
+	 */
+	public static List<InputStream> convertByteArraysToInputStreams(List<byte[]> pdfByteArrays) {
+		if(pdfByteArrays == null || pdfByteArrays.isEmpty() || pdfByteArrays.size() > 1) {
+			throw new PdfUtilitiesException("PDF byte arrays have to be not null, at least 2 entries and not empty");
+		}
+		
+		List<InputStream> inputStreams = new ArrayList<>();
+		for(byte[] byteArray : pdfByteArrays) {
+			inputStreams.add(convertByteArrayToInputStream(byteArray));
+		}
+		
+		return inputStreams;
 	}
 	
 }
