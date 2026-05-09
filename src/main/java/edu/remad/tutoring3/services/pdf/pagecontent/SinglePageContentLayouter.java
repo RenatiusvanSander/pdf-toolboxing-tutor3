@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Comparator;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -15,6 +14,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import edu.remad.tutoring3.services.pdf.ContentLayoutData;
+import edu.remad.tutoring3.services.pdf.exception.SinglePageContentLayouterException;
 import edu.remad.tutoring3.services.pdf.utilities.PageContentLayoutUtilities;
 
 /**
@@ -29,7 +29,7 @@ public class SinglePageContentLayouter {
 	 * a blank DIN4 rectangled in-memory-PDF-Document
 	 */
 	private final PDDocument pdfDocument;
-	
+
 	/**
 	 * PDF page
 	 */
@@ -90,8 +90,15 @@ public class SinglePageContentLayouter {
 	}
 
 	private void generateLogo() throws IOException {
-		InputStream inputStream = getClass().getClassLoader()
-				.getResourceAsStream(contentLayoutData.getLogo().getPath());
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		// System.out.println(cl);
+//		URL url = cl.getResource("img/logo.png");
+//		System.out.println(url);
+		InputStream inputStream = cl.getResourceAsStream(contentLayoutData.getLogo().getPath());
+
+		if (inputStream == null) {
+			throw new SinglePageContentLayouterException("logo.png was not found in Classpath!");
+		}
 		PDImageXObject headImage = PDImageXObject.createFromByteArray(pdfDocument, inputStream.readAllBytes(),
 				contentLayoutData.getLogo().getPath());
 		pageContentStream.drawImage(headImage, 25, contentLayoutData.getPageHeight() - 210, 181, 201);
@@ -216,5 +223,5 @@ public class SinglePageContentLayouter {
 				(float) contentLayoutData.getBottomRect().getHeight());
 		pageContentStream.fill();
 	}
-	
+
 }

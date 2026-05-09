@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
@@ -131,6 +132,7 @@ public final class PdfUtilities {
 							String.valueOf(invoice.getNo()), contentLayoutData.getCustomerName() });
 			contentLayoutData.setHasMainContentLayoutData(true);
 			contentLayoutData.setSplitDelimiter("\\.");
+			contentLayoutData.setCreator(ContentLayoutDataConstants.CREATOR);
 
 			return contentLayoutData;
 		} catch (RuntimeException e) {
@@ -153,7 +155,7 @@ public final class PdfUtilities {
 				invoice.getServiceContractId().getServiceContractName());
 		row1.put(ContentLayoutDataConstants.TABLE_HEADERS.get(2), String.valueOf(price));
 		row1.put(ContentLayoutDataConstants.TABLE_HEADERS.get(3), "1");
-		row1.put(ContentLayoutDataConstants.TABLE_HEADERS.get(4), String.valueOf(price) + "EUR");
+		row1.put(ContentLayoutDataConstants.TABLE_HEADERS.get(4), String.valueOf(price) + "\u20AC");
 		tableRows.add(row1);
 
 		return tableRows;
@@ -230,7 +232,7 @@ public final class PdfUtilities {
 	public static DocumentInformationBuilder populateDocumentInformationBuilder(ContentLayoutData contentLayout) {
 		DocumentInformationBuilder builder = new DocumentInformationBuilder();
 		builder.setAuthor(contentLayout.getContactName());
-		builder.setInvoiceNumber(Long.getLong(contentLayout.getInvoiceNo()));
+		builder.setInvoiceNumber(Long.getLong(StringUtils.substringAfter(contentLayout.getInvoiceNo(), " ")));
 		builder.setCreator(contentLayout.getCreator());
 		builder.setSubject(contentLayout.getInvoiceNoLabel() + " " + contentLayout.getInvoiceNo());
 		builder.setCreationDate(DocumentInformationUtilities.extractCreationDate(contentLayout));

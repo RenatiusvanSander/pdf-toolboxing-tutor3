@@ -3,6 +3,7 @@ package edu.remad.tutoring3.services.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -11,6 +12,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import edu.remad.tutoring3.persistence.models.InvoiceEntity;
 import edu.remad.tutoring3.services.pdf.constants.ContentLayoutDataConstants;
 import edu.remad.tutoring3.services.pdf.exception.PDFComplexInvoiceBuilderException;
+import edu.remad.tutoring3.services.pdf.exception.PdfUtilitiesException;
 import edu.remad.tutoring3.services.pdf.pagecontent.SinglePageContentLayouter;
 import edu.remad.tutoring3.services.pdf.utilities.PdfUtilities;
 
@@ -23,9 +25,9 @@ import edu.remad.tutoring3.services.pdf.utilities.PdfUtilities;
 public class PDFComplexInvoiceBuilder {
 
 	private InvoiceEntity invoice;
-	
+
 	private DateTimeFormatter dayFormatFormatter;
-	
+
 	private DateTimeFormatter timeFormatFormatter;
 
 	private PDDocument pdfDoucment;
@@ -41,7 +43,7 @@ public class PDFComplexInvoiceBuilder {
 
 		return this;
 	}
-	
+
 	/**
 	 * Allows to define a {@link DateTimeFormatter} for day format
 	 * 
@@ -50,10 +52,10 @@ public class PDFComplexInvoiceBuilder {
 	 */
 	public PDFComplexInvoiceBuilder dayFormatFormatter(DateTimeFormatter dayFormatFormatter) {
 		this.dayFormatFormatter = dayFormatFormatter;
-		
+
 		return this;
 	}
-	
+
 	/**
 	 * Allows to define a {@link DateTimeFormatter} for time format
 	 * 
@@ -62,7 +64,7 @@ public class PDFComplexInvoiceBuilder {
 	 */
 	public PDFComplexInvoiceBuilder timeFormatFormatter(DateTimeFormatter timeFormatFormatter) {
 		this.timeFormatFormatter = timeFormatFormatter;
-		
+
 		return this;
 	}
 
@@ -70,10 +72,25 @@ public class PDFComplexInvoiceBuilder {
 	 * @return byte array of invoice PDF
 	 */
 	public byte[] build() {
-		if(dayFormatFormatter != null || timeFormatFormatter != null) {
-			return buildDocument(PdfUtilities.createContentLayoutData(invoice, dayFormatFormatter, timeFormatFormatter));
-		} else {
-			return buildDocument(PdfUtilities.createContentLayoutData(invoice));
+		try {
+			if (dayFormatFormatter != null || timeFormatFormatter != null) {
+				return buildDocument(
+						PdfUtilities.createContentLayoutData(invoice, dayFormatFormatter, timeFormatFormatter));
+			} else {
+				return buildDocument(PdfUtilities.createContentLayoutData(invoice));
+			}
+		} catch (PdfUtilitiesException | PDFComplexInvoiceBuilderException | NullPointerException e) {
+			String invoicContent = "";
+
+			if (Objects.isNull(invoice)) {
+				invoicContent = "[]";
+			} else {
+				invoicContent = "[" + invoice.toString() + "]";
+			}
+
+			e.printStackTrace();
+			throw new PDFComplexInvoiceBuilderException(
+					"Invoice was not build, check object of InvoiceEntity: " + invoicContent, e);
 		}
 	}
 
@@ -120,5 +137,5 @@ public class PDFComplexInvoiceBuilder {
 			throw new PDFComplexInvoiceBuilderException("PDF Page was not created.", e);
 		}
 	}
-	
+
 }

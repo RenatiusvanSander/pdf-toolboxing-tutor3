@@ -1060,6 +1060,7 @@ public class ContentLayoutData {
 				if (price != null && price.length() > 2) {
 					price = price.replace(" EUR", "");
 					price = price.replace("EUR", "");
+					price = price.replace("\u20AC", "");
 					double doublePrice = Double.parseDouble(price);
 					sum += doublePrice;
 				}

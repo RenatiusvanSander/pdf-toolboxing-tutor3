@@ -33,7 +33,7 @@ public final class ContentLayoutDataConstants {
 	public static final String NAME_PREFIX = "Frau / Herrn ";
 
 	/** logo file path value */
-	public static final String LOGO_FILE_PATH = "img/logo.png";
+	public static final String LOGO_FILE_PATH = "/img/logo.png";
 
 	/** font Helvetica */
 	public static final PDType1Font FONT = PDType1Font.HELVETICA;
@@ -141,5 +141,8 @@ public final class ContentLayoutDataConstants {
 
 	/** contact location value */
 	public static final String CONTACT_LOCATION = "Hamburg";
+
+	/** creator name */
+	public static final String CREATOR = "Remy Meier";
 	
 }
