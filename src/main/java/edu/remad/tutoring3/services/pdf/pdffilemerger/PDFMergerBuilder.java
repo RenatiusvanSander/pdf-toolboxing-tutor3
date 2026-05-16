@@ -31,7 +31,7 @@ public class PDFMergerBuilder {
 	private PDDocument destinationPDDocument;
 
 	private MemoryUsageSetting memoryUsageSetting;
-	
+
 	private MaxMainMemoryBytes maxMainMemoryBytes;
 
 	/**
@@ -98,7 +98,6 @@ public class PDFMergerBuilder {
 			try {
 				for (File pdfFile : pdfFiles) {
 					pdfMerger.addSource(pdfFile);
-
 				}
 
 				return this;
@@ -116,10 +115,10 @@ public class PDFMergerBuilder {
 	 * @param pdfInputStream PDF file as input stream
 	 * @return {@link PDFMergerBuilder}
 	 */
-	public PDFMergerBuilder addSource(InputStream pdfInputStream){
+	public PDFMergerBuilder addSource(InputStream pdfInputStream) {
 		if (pdfInputStream != null) {
 			pdfMerger.addSource(pdfInputStream);
-			
+
 			return this;
 		}
 
@@ -237,7 +236,7 @@ public class PDFMergerBuilder {
 	 */
 	public PDFMergerBuilder destinationStream(OutputStream destinationStream) {
 		if (destinationStream != null && pdfMerger.getDestinationFileName() == null) {
-			
+
 			pdfMerger.setDestinationStream(destinationStream);
 			return this;
 		}
@@ -275,7 +274,7 @@ public class PDFMergerBuilder {
 
 		throw new PDFMergerBuilderException("PDFMergerBuilder: memoryUsageSetting was null.");
 	}
-	
+
 	/**
 	 * MaxMainMemoryBytes
 	 * 
@@ -283,12 +282,13 @@ public class PDFMergerBuilder {
 	 * @return {@link PDFMergerBuilder}
 	 */
 	public PDFMergerBuilder maxMainMemoryBytes(MaxMainMemoryBytes maxMainMemoryBytes) {
-		if(this.memoryUsageSetting != null) {
-			throw new PDFMergerBuilderException("PDFMergerBuilderException: When you want to set maxMainMemoryBytes, there has to be none memoryUsageSetting set.");
+		if (this.memoryUsageSetting != null) {
+			throw new PDFMergerBuilderException(
+					"PDFMergerBuilderException: When you want to set maxMainMemoryBytes, there has to be none memoryUsageSetting set.");
 		}
-		
+
 		this.maxMainMemoryBytes = maxMainMemoryBytes;
-		
+
 		return this;
 	}
 
@@ -304,12 +304,11 @@ public class PDFMergerBuilder {
 		try {
 			if (memoryUsageSetting != null) {
 				pdfMerger.mergeDocuments(memoryUsageSetting);
-			} else if(this.maxMainMemoryBytes != null && memoryUsageSetting == null) {
-				pdfMerger.mergeDocuments(
-						MemoryUsageSetting.setupMainMemoryOnly(maxMainMemoryBytes.getMaxMainMemory()));
+			} else if (this.maxMainMemoryBytes != null && memoryUsageSetting == null) {
+				pdfMerger.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly(maxMainMemoryBytes.getMaxMainMemory()));
 			} else {
-				pdfMerger.mergeDocuments(
-						MemoryUsageSetting.setupMainMemoryOnly(MaxMainMemoryBytes.CONSTANT_512_MB_MEMORY.getMaxMainMemory()));
+				pdfMerger.mergeDocuments(MemoryUsageSetting
+						.setupMainMemoryOnly(MaxMainMemoryBytes.CONSTANT_512_MB_MEMORY.getMaxMainMemory()));
 			}
 		} catch (IOException e) {
 			throw new PDFMergerBuilderException("PDFMergerBuilder: Merging error.", e);

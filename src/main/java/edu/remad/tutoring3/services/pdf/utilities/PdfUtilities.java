@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
@@ -269,7 +268,7 @@ public final class PdfUtilities {
 	public static DateTimeFormatter getTimeFormatter() {
 		return TIME_FORMATTER;
 	}
-	
+
 	/**
 	 * Converts byte[] to {@link ByteArrayInputStream}
 	 * 
@@ -279,24 +278,25 @@ public final class PdfUtilities {
 	public static InputStream convertByteArrayToInputStream(byte[] pdfByteArray) {
 		return new ByteArrayInputStream(pdfByteArray);
 	}
-	
+
 	/**
 	 * Converts byte[]-Arrays to a list of {@link ByteArrayInputStream}
 	 * 
-	 * @param pdfByteArrays pdfByteArray pdf-files to be converted to {@link InputStream}
+	 * @param pdfByteArrays pdfByteArray pdf-files to be converted to
+	 *                      {@link InputStream}
 	 * @return list of {@link InputStream}
 	 */
 	public static List<InputStream> convertByteArraysToInputStreams(List<byte[]> pdfByteArrays) {
-		if(pdfByteArrays == null || pdfByteArrays.isEmpty() || pdfByteArrays.size() > 1) {
-			throw new PdfUtilitiesException("PDF byte arrays have to be not null, at least 2 entries and not empty");
+		if (pdfByteArrays == null || pdfByteArrays.isEmpty() || pdfByteArrays.size() < 2) {
+			throw new PdfUtilitiesException("PDF byte arrays have to be not null and shall have at least 2 entries and shall not be empty.");
 		}
-		
+
 		List<InputStream> inputStreams = new ArrayList<>();
-		for(byte[] byteArray : pdfByteArrays) {
+		for (byte[] byteArray : pdfByteArrays) {
 			inputStreams.add(convertByteArrayToInputStream(byteArray));
 		}
-		
+
 		return inputStreams;
 	}
-	
+
 }

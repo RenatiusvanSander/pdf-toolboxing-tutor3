@@ -1,5 +1,7 @@
 package edu.remad.tutoring3.services.pdf.documentinformation;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -8,6 +10,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 
 import edu.remad.tutoring3.services.pdf.ContentLayoutData;
@@ -97,6 +101,44 @@ public class DocumentInformationMultiplePagesBuilder {
 			creators[index] = contentLayoutData.getCreator();
 			subjects[index] = contentLayoutData.getSubject();
 			keywords[index] = Arrays.asList(contentLayoutData.getDocumentInformationKeywords()).stream()
+					.collect(Collectors.joining(" "));
+			index++;
+		}
+
+		return this;
+	}
+
+	/**
+	 * Sets contentLayoutDatas
+	 * 
+	 * @param contentLayoutDatas contentLayoutDatas
+	 * @return {@link DocumentInformationMultiplePagesBuilder}
+	 * @throws IOException 
+	 */
+	public DocumentInformationMultiplePagesBuilder inputStreams(List<InputStream> inputStreams) throws IOException {
+		List<PDDocumentInformation> documentInfos = new ArrayList<>();
+		for (InputStream inputStream : inputStreams) {
+			PDDocumentInformation documentInfo = PDDocument.load(inputStream).getDocumentInformation();
+			documentInfos.add(documentInfo);
+		}
+
+		if (!documentInfos.isEmpty()) {
+			int size = documentInfos.size();
+			authors = new String[size];
+			invoiceNumbers = new Long[size];
+			creators = new String[size];
+			subjects = new String[size];
+			keywords = new String[size];
+		}
+
+		int index = 0;
+		for (PDDocumentInformation documentInformation : documentInfos) {
+			authors[index] = documentInformation.getAuthor();
+			String subject = documentInformation.getSubject();
+			invoiceNumbers[index] = Long.valueOf(StringUtils.substringAfter(subject, "  "));
+			creators[index] = documentInformation.getCreator();
+			subjects[index] = subject;
+			keywords[index] = Arrays.asList(documentInformation.getKeywords()).stream()
 					.collect(Collectors.joining(" "));
 			index++;
 		}
@@ -219,5 +261,5 @@ public class DocumentInformationMultiplePagesBuilder {
 
 		return documentInformation;
 	}
-	
+
 }
